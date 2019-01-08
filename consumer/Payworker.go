@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin" 
     "fmt"
-    "consumer/utils"
+    "utils"
     "net/url"
     "encoding/json"
     "bytes"
