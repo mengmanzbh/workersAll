@@ -4,7 +4,7 @@ RUN go get -u github.com/gin-gonic/gin
 
 WORKDIR /go/src/app
 COPY worker.go .
-RUN go get github.com/streadway/amqp && /usr/local/go/bin/go run app .
+RUN go get github.com/streadway/amqp && /usr/local/go/bin/go run app worker.go
 
 # # Application image.
 # FROM golang:1.8
