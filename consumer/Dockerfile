@@ -3,7 +3,7 @@ FROM golang:1.8 as builder
 RUN go get -u github.com/gin-gonic/gin
 
 WORKDIR /go/src/app
-COPY Payworker.go .
+COPY . .
 RUN go get github.com/streadway/amqp && /usr/local/go/bin/go build -o app .
 
 # Application image.
