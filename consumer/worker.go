@@ -26,7 +26,7 @@ func main() {
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
-		"task_queue", // name
+		"pay_queue", // name
 		true,         // durable
 		false,        // delete when unused
 		false,        // exclusive
