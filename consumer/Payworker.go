@@ -12,6 +12,7 @@ import (
     "strconv"
     "encoding/hex"
     "crypto/md5"
+    "log"
 )
 //rabbitmq使用的错误输出
 func failOnError(err error, msg string) {
