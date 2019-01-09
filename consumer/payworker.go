@@ -139,12 +139,12 @@ func main() {
 				    /************发送请求给聚合************/
 					data,err:=Post(juheURL,param)
 					if err!=nil{
-						fmt.Errorf("请求失败,错误信息:\r\n%v",err)
+						fmt.Errorf("请求聚合失败,错误信息:\r\n%v",err)
 
 					}else{
 						var netReturn map[string]interface{}
 						json.Unmarshal(data,&netReturn)
-						
+						fmt.Printf("请求聚合返回结果:\r\n%v",netReturn)
 					}
 					/***********发送请求给聚合************/
 
