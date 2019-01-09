@@ -13,6 +13,7 @@ import (
     "crypto/md5"
     "encoding/hex"
     "io/ioutil"
+    "math/rand"
 )
 
 func failOnError(err error, msg string) {
