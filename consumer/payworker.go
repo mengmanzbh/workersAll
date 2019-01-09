@@ -104,57 +104,22 @@ func main() {
                                 param.Set("orderid",orderid) //订单号，提交订单时会返回
 
                                 /***************先减币成功才发送订单*****************/
-                                data := make(map[string]interface{})
-                                data["access"] = token
-                                data["mark"] = "TGV"
-                                data["num"] = resultNum
-                                data["order_no"] = GetRandomString(6)
-                                bytesData, err := json.Marshal(data)
-                                if err != nil {
-                                    fmt.Println(err.Error() )
-                                    return
-                                }
-                                reader := bytes.NewReader(bytesData)
-                                url := "http://47.52.47.73:8112/auth/auth/subNum"
-                                request, err := http.NewRequest("POST", url, reader)
-                                if err != nil {
-                                    fmt.Println(err.Error())
-                                    return
-                                }
-                                request.Header.Set("Content-Type", "application/json;charset=UTF-8")
-                                client := http.Client{}
-                                resp, err := client.Do(request)
-                                if err != nil {
-                                    fmt.Println(err.Error())
-                                    return
-                                }
-                                respBytes, err := ioutil.ReadAll(resp.Body)
-                                if err != nil {
-                                    fmt.Println(err.Error())
-                                    return
-                                }
-                                //返回结果
-                                var netReturn map[string]interface{}
-                                json.Unmarshal(respBytes,&netReturn)
-                                if netReturn["isSuccess"]==true{
-                                    fmt.Printf("减币成功:\r\n%v",netReturn)
-                                    /*****************减币成功********************/
-                                    
+                                isSuccess :=subNum(token,resultNum)
+                                fmt.Println(isSuccess)
+                                if isSuccess == true {
+                                    fmt.Println("减币成功")
                                     /************发送请求给聚合************/
                                     data,err:=Post(juheURL,param)
                                     if err!=nil{
                                         fmt.Errorf("请求聚合失败,错误信息:\r\n%v",err)
-
                                     }else{
                                         var netReturn map[string]interface{}
                                         json.Unmarshal(data,&netReturn)
                                         fmt.Printf("请求聚合返回结果:\r\n%v",netReturn)
                                     }
                                     /***********发送请求给聚合************/
-
                                 }else{
-                                    /*****************减币失败********************/
-                                 
+                                    fmt.Println("减币失败")   
                                 }
                                 /***************减币成功才发送订单*****************/             
                                /******************发送订单*****************/
@@ -292,6 +257,48 @@ func getAccess(code string)(token string) {
     
     return tokendata
 }
+
+//用户减币函数
+func subNum(taken string,num float64)(y bool) {
+    data := make(map[string]interface{})
+    data["access"] = taken
+    data["mark"] = "TGV"
+    data["num"] = num
+    data["order_no"] = GetRandomString(6)
+    bytesData, err := json.Marshal(data)
+    if err != nil {
+        fmt.Println(err.Error() )
+        return
+    }
+    reader := bytes.NewReader(bytesData)
+    url := "http://47.52.47.73:8112/auth/auth/subNum"
+    request, err := http.NewRequest("POST", url, reader)
+    if err != nil {
+        fmt.Println(err.Error())
+        return
+    }
+    request.Header.Set("Content-Type", "application/json;charset=UTF-8")
+    client := http.Client{}
+    resp, err := client.Do(request)
+    if err != nil {
+        fmt.Println(err.Error())
+        return
+    }
+    respBytes, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        fmt.Println(err.Error())
+        return
+    }
+    //返回结果
+    var netReturn map[string]interface{}
+    json.Unmarshal(respBytes,&netReturn)
+     
+    var isSuccess bool
+    
+    isSuccess = netReturn["isSuccess"].(bool)
+    return isSuccess
+}
+
 
 
 // 生成32位MD5
