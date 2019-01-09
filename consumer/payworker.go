@@ -79,7 +79,7 @@ func main() {
 
             /******************查询订单状态确定是否为2*****************/
                 orderidstatus := getorderStatus(orderid)
-                 if orderidstatus != "2" {
+                 if orderidstatus == "2" {
                      fmt.Print("订单状态2可以减币操作:",orderidstatus)
                                 /******************发送订单*****************/
                                 token := getAccess(code)//根据前端传来的code获取token
@@ -105,7 +105,7 @@ func main() {
 
                                 /***************先减币成功才发送订单*****************/
                                 isSuccess :=subNum(token,resultNum)
-                                fmt.Println(isSuccess)
+                                fmt.Println("减币结果:",isSuccess)
                                 if isSuccess == true {
                                     fmt.Println("减币成功")
                                     /************发送请求给聚合************/
