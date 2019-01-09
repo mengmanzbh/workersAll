@@ -159,7 +159,7 @@ func main() {
 			t := time.Duration(dot_count)
 			time.Sleep(t * time.Second)
 			log.Printf("Done")
-			d.Ack(true)
+			d.Ack(false)
 		}
 	}()
 
