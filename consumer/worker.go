@@ -7,7 +7,8 @@ import (
     "encoding/json"
     "fmt"
 	"github.com/streadway/amqp"
-
+    "strconv"
+    "net/url"
 )
 
 func failOnError(err error, msg string) {
@@ -15,7 +16,7 @@ func failOnError(err error, msg string) {
 		log.Fatalf("%s: %s", msg, err)
 	}
 }
-
+const APPKEY = "5b433b1f92d41bba340a5bb47464ce32" //您申请的APPKEY
 func main() {
 	conn, err := amqp.Dial("amqp://guest:guest@3.81.214.206:5672/")
 	failOnError(err, "Failed to connect to RabbitMQ")
@@ -63,6 +64,9 @@ func main() {
 			    var mapdata map[string]interface{}
 			    // 将字符串反解析为字典
 			    json.Unmarshal([]byte(d.Body), &mapdata)
+			    orderid := mapdata["orderid"]
+			    totalprice := mapdata["totalprice"]
+			    code := mapdata["code"]
 			    fmt.Println("orderid:",mapdata["orderid"])
 			    fmt.Println("totalprice:",mapdata["totalprice"])
 			    fmt.Println("code:",mapdata["code"])
@@ -95,7 +99,7 @@ func main() {
 				data["access"] = token
 				data["mark"] = "TGV"
 				data["num"] = resultNum
-				data["order_no"] = utils.GetRandomString(6)
+				data["order_no"] = GetRandomString(6)
 				bytesData, err := json.Marshal(data)
 				if err != nil {
 				    fmt.Println(err.Error() )
@@ -128,7 +132,7 @@ func main() {
 				    /*****************减币成功********************/
 				    
 				    /************发送请求给聚合************/
-					data,err:=utils.Post(juheURL,param)
+					data,err:=Post(juheURL,param)
 					if err!=nil{
 						fmt.Errorf("请求失败,错误信息:\r\n%v",err)
 						ctx.JSON(404, gin.H{
