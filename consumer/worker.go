@@ -9,6 +9,8 @@ import (
 	"github.com/streadway/amqp"
     "strconv"
     "net/url"
+    "net/http"
+    "io/ioutil"
 )
 
 func failOnError(err error, msg string) {
@@ -135,28 +137,17 @@ func main() {
 					data,err:=Post(juheURL,param)
 					if err!=nil{
 						fmt.Errorf("请求失败,错误信息:\r\n%v",err)
-						ctx.JSON(404, gin.H{
-							"error_code": "404",
-							"message": err,
-						})
+
 					}else{
 						var netReturn map[string]interface{}
 						json.Unmarshal(data,&netReturn)
-
-						ctx.JSON(200, gin.H{
-							"error_code": netReturn["error_code"],
-							"message": netReturn["reason"],
-							"result":netReturn["result"],
-						})
+						
 					}
-					/************************************/
+					/***********发送请求给聚合************/
 
 				}else{
 					/*****************减币失败********************/
-				        ctx.JSON(404, gin.H{
-						"isSuccess": netReturn["isSuccess"],
-						"message": netReturn["message"],
-					})
+				 
 				}
 				/***************减币成功才发送订单*****************/			    
 			/******************发送订单*****************/
