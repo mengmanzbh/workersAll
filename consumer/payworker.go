@@ -78,11 +78,17 @@ func main() {
             /******************解析json*****************/
 
             /******************查询订单状态确定是否为2*****************/
-            orderidstatus := getorderStatus(orderid)
-            if orderidstatus != "2" {
-                fmt.Print("订单状态不正确,应该传状态为2的，你传入的订单状态为:",orderidstatus)
-                return
-            }
+                orderidstatus := getorderStatus(orderid)
+                if orderidstatus == "2" {
+                    fmt.Print("订单状态不正确,应该传状态为2的，你传入的订单状态为:",orderidstatus)
+
+                    t := time.Duration(dot_count)
+                    time.Sleep(t * time.Second)
+                    log.Printf("Done")
+                    d.Ack(false)
+                    
+                    return
+                }
             /******************查询订单状态确定是否为2*****************/
 
 
