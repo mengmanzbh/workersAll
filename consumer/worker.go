@@ -10,6 +10,8 @@ import (
     "strconv"
     "net/url"
     "net/http"
+    "crypto/md5"
+    "encoding/hex"
     "io/ioutil"
 )
 
