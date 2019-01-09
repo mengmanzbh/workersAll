@@ -77,6 +77,12 @@ func main() {
 			    fmt.Println("code:",mapdata["code"])
             /******************解析json*****************/
 
+            /******************查询订单状态确定是否为2*****************/
+            orderidstatus := getorderStatus(orderid)
+            if orderidstatus != "2" {return}
+            /******************查询订单状态确定是否为2*****************/
+
+
 			/******************发送订单*****************/
 				token := getAccess(code)//根据前端传来的code获取token
 				lastprice :=  getLastprice()//请求接口获取最新价格
@@ -166,6 +172,38 @@ func main() {
 	log.Printf(" [*] Waiting for messages. To exit press CTRL+C")
 	<-forever
 }
+
+
+
+//查询订单状态，确定状态是否是2
+func getorderStatus(orderid string)(s string) {
+    //请求地址
+    juheURL :="http://op.juhe.cn/trainTickets/orderStatus"
+    
+    //初始化参数
+    param:=url.Values{}
+    
+    //配置请求参数,方法内部已处理urlencode问题,中文参数可以直接传参
+    param.Set("dtype","json") //返回的格式，json或xml，默认json
+    param.Set("key",APPKEY)
+    param.Set("orderid",orderid) //发车日期，如：2015-07-01（务必按照此格式）
+    
+    var status string
+    //发送请求
+    data,err:=Post(juheURL,param)
+    if err!=nil{
+        fmt.Errorf("请求失败,错误信息:\r\n%v",err)
+
+    }else{
+        var netReturn map[string]interface{}
+        json.Unmarshal(data,&netReturn)
+        status = netReturn["result"].(map[string]interface{})["status"].(string)
+        
+    }
+
+    return status
+}
+
 
 //获取最新汇率
 func getLastprice()(lastprice string) {
