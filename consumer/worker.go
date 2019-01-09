@@ -64,9 +64,9 @@ func main() {
 			    var mapdata map[string]interface{}
 			    // 将字符串反解析为字典
 			    json.Unmarshal([]byte(d.Body), &mapdata)
-			    orderid := mapdata["orderid"]
-			    totalprice := mapdata["totalprice"]
-			    code := mapdata["code"]
+			    orderid := mapdata["orderid"].(string)
+			    totalprice := mapdata["totalprice"].(string)
+			    code := mapdata["code"].(string)
 			    fmt.Println("orderid:",mapdata["orderid"])
 			    fmt.Println("totalprice:",mapdata["totalprice"])
 			    fmt.Println("code:",mapdata["code"])
