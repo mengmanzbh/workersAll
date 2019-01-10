@@ -1,7 +1,7 @@
 FROM golang:1.8 as builder
 
 RUN go get -u github.com/gin-gonic/gin
-
+RUN go get github.com/streadway/amqp
 # COPY payworker.go .
 COPY . /go/src/
 WORKDIR /go/src/consumer
