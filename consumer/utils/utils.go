@@ -1,3 +1,4 @@
+package utils
 import (
     "crypto/md5"
     "database/sql"
