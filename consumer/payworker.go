@@ -329,6 +329,56 @@ func  GetRandomString(l int) string {
     return GetTime() + string(result)
 }
 
+// 根据授权码获取用户信息
+func GetUserByAccess(access string)(x float64,y string,z string,q string) {
+  data := make(map[string]interface{})
+    data["access"] = access
+    bytesData, err := json.Marshal(data)
+    if err != nil {
+        fmt.Println(err.Error() )
+        return
+    }
+    reader := bytes.NewReader(bytesData)
+    url := "http://47.52.47.73:8112/auth/auth/GetUserByAccess"
+    request, err := http.NewRequest("POST", url, reader)
+    if err != nil {
+        fmt.Println(err.Error())
+        return
+    }
+    request.Header.Set("Content-Type", "application/json;charset=UTF-8")
+    client := http.Client{}
+    resp, err := client.Do(request)
+    if err != nil {
+        fmt.Println(err.Error())
+        return
+    }
+    respBytes, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        fmt.Println(err.Error())
+        return
+    }
+    var customer_id float64
+    var realname string
+    var nickname string
+    var cellphone string
+
+    //返回结果
+    var netReturn map[string]interface{}
+    json.Unmarshal(respBytes,&netReturn)
+    if netReturn["isSuccess"]==true{
+        userdata := netReturn["data"]
+        // fmt.Printf("获取用户信息:\r\n%v",userdata)
+        customer_id = userdata.(map[string]interface{})["customer_id"].(float64)
+        realname = userdata.(map[string]interface{})["realname"].(string)
+        nickname = userdata.(map[string]interface{})["nickname"].(string)
+        cellphone = userdata.(map[string]interface{})["cellphone"].(string)
+        
+    }else{
+        fmt.Println("获取token失败")
+    }
+    return customer_id,realname,nickname,cellphone
+}
+
 // get 网络请求
 func Get(apiURL string,params url.Values)(rs[]byte ,err error){
     var Url *url.URL
