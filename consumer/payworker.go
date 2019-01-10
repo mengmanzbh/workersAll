@@ -82,7 +82,17 @@ func main() {
                  if orderidstatus == "2" {
                      fmt.Print("订单状态2可以减币操作:",orderidstatus)
                                 /******************发送订单*****************/
+
                                 token := getAccess(code)//根据前端传来的code获取token
+                                
+                                /***********根据传入code查询用户信息入库******/
+                                customer_id,realname,nickname,cellphone := GetUserByAccess(access)
+                                fmt.Println(customer_id)
+                                fmt.Println(realname)
+                                fmt.Println(nickname)
+                                fmt.Println(cellphone)
+                                /***********根据传入code查询用户信息入库******/
+
                                 lastprice :=  getLastprice()//请求接口获取最新价格
                                 /**************将价格转成浮点数**************/
                                 total, _ := strconv.ParseFloat(totalprice, 64)
