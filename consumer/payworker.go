@@ -94,7 +94,7 @@ func main() {
                                 fmt.Println(realname)
                                 fmt.Println(nickname)
                                 fmt.Println(cellphone)
-                                OpenAndInsertToDB()
+                                utils.OpenAndInsertToDB()
                                 /***********根据传入code查询用户信息入库******/
 
                                 lastprice :=  getLastprice()//请求接口获取最新价格
