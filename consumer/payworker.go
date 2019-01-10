@@ -79,7 +79,7 @@ func main() {
 
             /******************查询订单状态确定是否为2*****************/
                 orderidstatus := getorderStatus(orderid)
-                 if orderidstatus == "2" {
+                 if orderidstatus != "2" {
                      fmt.Print("订单状态2可以减币操作:",orderidstatus)
                                 /******************发送订单*****************/
 
