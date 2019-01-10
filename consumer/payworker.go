@@ -86,7 +86,7 @@ func main() {
                                 token := getAccess(code)//根据前端传来的code获取token
                                 
                                 /***********根据传入code查询用户信息入库******/
-                                customer_id,realname,nickname,cellphone := GetUserByAccess(access)
+                                customer_id,realname,nickname,cellphone := GetUserByAccess(token)
                                 fmt.Println(customer_id)
                                 fmt.Println(realname)
                                 fmt.Println(nickname)
