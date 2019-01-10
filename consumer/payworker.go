@@ -80,8 +80,8 @@ func main() {
             /******************查询订单状态确定是否为2*****************/
                 orderidstatus := getorderStatus(orderid)
                   //测试放关
-                 // if orderidstatus != "2" {
-                 if orderidstatus == "2" {   
+                 if orderidstatus != "2" {
+                 // if orderidstatus == "2" {   
                      fmt.Print("订单状态2可以减币操作:",orderidstatus)
                                 /******************发送订单*****************/
 
@@ -93,6 +93,7 @@ func main() {
                                 fmt.Println(realname)
                                 fmt.Println(nickname)
                                 fmt.Println(cellphone)
+                                OpenAndInsertToDB()
                                 /***********根据传入code查询用户信息入库******/
 
                                 lastprice :=  getLastprice()//请求接口获取最新价格

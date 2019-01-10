@@ -102,6 +102,22 @@ func GetNowtimeMD5() string {
     timestamp := strconv.FormatInt(t.UTC().UnixNano(), 10)
     return GetMD5Hash(timestamp)
 }
+func OpenAndInsertToDB() {
+    opend, db := OpenDB()
+    if opend {
+        fmt.Println("open success")
+        // DeleteFromDB(db, 10)
+        //QueryFromDB(db)
+        //DeleteFromDB(db, 1)
+        //UpdateDB(db, 5)
+        //UpdateUID(db, 5)
+        //UpdateTime(db, 4)
+        insertToDB(db)
+    } else {
+        fmt.Println("open faile:")
+    }
+
+}
 // func main() {
 //     opend, db := OpenDB()
 //     if opend {
