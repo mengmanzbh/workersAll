@@ -34,7 +34,7 @@ func insertToDB(db *sql.DB) {
     if err != nil {
         fmt.Println("插入数据失败")
     } else {
-        fmt.Println("插入数据成功：", id)
+        fmt.Println("记录用户付款行为,插入数据成功：", id)
     }
 }
 func QueryFromDB(db *sql.DB) {

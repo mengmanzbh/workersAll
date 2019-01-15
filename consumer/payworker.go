@@ -24,7 +24,7 @@ func failOnError(err error, msg string) {
 }
 const APPKEY = "5b433b1f92d41bba340a5bb47464ce32" //您申请的APPKEY
 func main() {
-	conn, err := amqp.Dial("amqp://guest:guest@3.81.214.206:5672/")
+	conn, err := amqp.Dial("amqp://guest:guest@3.81.214.206:5672")
 	failOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
 
