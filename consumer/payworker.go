@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"log"
 	"time"
-    "utils"
+    // "utils"
     "encoding/json"
     "fmt"
 	"github.com/streadway/amqp"
@@ -73,6 +73,7 @@ func main() {
 			    orderid := mapdata["orderid"].(string)
 			    totalprice := mapdata["totalprice"].(string)
 			    code := mapdata["code"].(string)
+                token := getAccess(code)//根据前端传来的code获取token
 			    fmt.Println("orderid:",mapdata["orderid"])
 			    fmt.Println("totalprice:",mapdata["totalprice"])
 			    fmt.Println("code:",mapdata["code"])
